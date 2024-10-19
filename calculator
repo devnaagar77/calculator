@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+public class SmartCalculator {
+    private double result = 0;
+
+    public void clear() {
+        result = 0;
+        System.out.println("Calculator cleared.");
+    }
+
+    public void performOperation(String operation, double number) {
+        switch (operation) {
+            case "+" -> result += number;
+            case "-" -> result -= number;
+            case "*" -> result *= number;
+            case "/" -> {
+                if (number != 0) {
+                    result /= number;
+                } else {
+                    System.out.println("Error: Division by zero.");
+                }
+            }
+            default -> System.out.println("Invalid operation.");
+        }
+    }
+
+    public void printResult() {
+        System.out.println("Current Result: " + result);
+    }
+
+    public static void main(String[] args) {
+        SmartCalculator calculator = new SmartCalculator();
+        Scanner scanner = new Scanner(System.in);
+        String input;
+
+        while (true) {
+            System.out.print("Enter a number (or 'C' to clear, 'Q' to quit): ");
+            input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("C")) {
+                calculator.clear();
+            } else if (input.equalsIgnoreCase("Q")) {
+                System.out.println("Exiting...");
+                break;
+            } else {
+                try {
+                    double number = Double.parseDouble(input);
+                    System.out.print("Enter operation (+, -, *, /): ");
+                    String operation = scanner.nextLine();
+                    calculator.performOperation(operation, number);
+                    calculator.printResult();
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a valid number.");
+                }
+            }
+        }
+        scanner.close();
+    }
+}
